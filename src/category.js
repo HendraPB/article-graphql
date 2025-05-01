@@ -16,6 +16,8 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createCategory(name: String!): Category
+    updateCategory(id: Int!, name: String): Category
+    deleteCategory(id: Int!): Category
   }
 `;
 
@@ -31,7 +33,15 @@ export const resolvers = {
         data: {
           name
         }
-      })
+      }),
+
+    updateCategory: (_, { id, name }) =>
+      prisma.category.update({
+        where: { id },
+        data: { name }
+      }),
+
+    deleteCategory: (_, { id }) => prisma.category.delete({ where: { id } })
   },
 
   Category: {

@@ -18,6 +18,8 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createComment(content: String!, userId: Int!, articleId: Int!): Comment
+    updateComment(id: Int!, content: String, userId: Int, articleId: Int): Comment
+    deleteComment(id: Int!): Comment
   }
 `;
 
@@ -35,7 +37,15 @@ export const resolvers = {
           userId,
           articleId
         }
-      })
+      }),
+
+    updateComment: (_, { id, content, userId, articleId }) =>
+      prisma.comment.update({
+        where: { id },
+        data: { content, userId, articleId }
+      }),
+
+    deleteComment: (_, { id }) => prisma.comment.delete({ where: { id } })
   },
 
   Comment: {

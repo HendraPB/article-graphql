@@ -17,6 +17,8 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createUser(name: String!, email: String!): User
+    updateUser(id: Int!, name: String, email: String): User
+    deleteUser(id: Int!): User
   }
 `;
 
@@ -33,7 +35,15 @@ export const resolvers = {
           name,
           email
         }
-      })
+      }),
+
+    updateUser: (_, { id, name, email }) =>
+      prisma.user.update({
+        where: { id },
+        data: { name, email }
+      }),
+
+    deleteUser: async (_, { id }) => prisma.user.delete({ where: { id } })
   },
 
   User: {
