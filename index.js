@@ -1,7 +1,12 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import typeDefs from './src/typeDefs.js';
-import resolvers from './src/resolvers.js';
+import { typeDefs as userTypeDefs, resolvers as userResolvers } from './src/user.js';
+import { typeDefs as articleTypeDefs, resolvers as articleResolvers } from './src/article.js';
+import { typeDefs as commentTypeDefs, resolvers as commentResolvers } from './src/comment.js';
+import { typeDefs as categoryTypeDefs, resolvers as categoryResolvers } from './src/category.js';
+
+const typeDefs = [userTypeDefs, articleTypeDefs, commentTypeDefs, categoryTypeDefs];
+const resolvers = [userResolvers, articleResolvers, commentResolvers, categoryResolvers];
 
 const server = new ApolloServer({
   typeDefs,
